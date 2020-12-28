@@ -33,11 +33,24 @@ app.get('/api/genres', (req,res) => {
 app.get('/api/genres/:id', (req, res) => {
   const genre = genres.find(genre => genre.id === parseInt(req.params.id));
   if (!genre) return res.status(404).send('Sorry, the genre with that given ID was not found');
-  res.send(genre)
+  res.send(genre);
+});
+
+app.post('/api/genres', (req, res) => {
+  const { error } = validateGenre(req.body);
+  if (error) return res.status(400).send(error.details[0].message);
+
+  const genre = {
+    id: genres.length + 1,
+    name: req.body.name
+  };
+
+  genres.push(genre);
+  res.send(genre);
 });
 
 
-function validateGenres(genres) {
+function validateGenre(genre) {
   const schema = Joi.object({
     name: Joi.string()
             .min(3)
