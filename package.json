@@ -19,6 +19,7 @@
   "homepage": "https://github.com/MarshaAnnon/vidly#readme",
   "dependencies": {
     "express": "^4.17.1",
+    "fawn": "^2.1.5",
     "joi": "^17.3.0",
     "mongoose": "^5.11.9",
     "node": "^15.4.0",
