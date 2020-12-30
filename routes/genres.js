@@ -1,25 +1,8 @@
 const express = require('express');
 const router = express.Router();
 const { Genre, validate } = require('../models/genre');
+const auth = require('../middleware/auth');
 
-// const genres = [
-//   { id: 1, name: "Action" },
-//   { id: 2, name: "Animation" },
-//   { id: 3, name: "Comedy" },
-//   { id: 4, name: "Crime" },
-//   { id: 5, name: "Drama" },
-//   { id: 6, name: "Experimental" },
-//   { id: 7, name: "Fantasy" },
-//   { id: 8, name: "Historical" },
-//   { id: 9, name: "Horror" },
-//   { id: 10, name: "Romance" },
-//   { id:11, name: "Science Fiction"},
-//   { id:12, name: "Thriller"},
-//   { id:13, name: "Western" },
-//   { id: 14, name: "Other" }
-// ]
-
-//gets all of the genre objects
 router.get('/', async (req, res) => {
   const genres = await Genre.find().sort('name');
   res.send(genres);
@@ -35,7 +18,7 @@ router.get('/:id', async (req, res) => {
   res.send(genre);
 });
 
-router.post('/', async (req, res) => {
+router.post('/', auth, async (req, res) => {
   const { error } = validate(req.body);
   if (error) return res.status(400).send(error.details[0].message);
 
