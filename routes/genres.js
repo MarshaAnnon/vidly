@@ -3,13 +3,14 @@ const router = express.Router();
 const { Genre, validate } = require('../models/genre');
 const admin = require('../middleware/admin');
 const auth = require('../middleware/auth');
+const { nextTick } = require('process');
 
-router.get('/', async (req, res) => {
+router.get('/', async (req, res, next) => {
   try {
     const genres = await Genre.find().sort('name');
     res.send(genres);
   } catch (ex) {
-    res.status(500).send('Something went wrong');
+    next(ex);
   }
 });
 
