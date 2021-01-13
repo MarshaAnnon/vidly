@@ -1,5 +1,4 @@
 const mongoose = require('mongoose');
-const winston = require('winston');
 const config = require('config');
 const logger = require('../middleware/logging');
 
